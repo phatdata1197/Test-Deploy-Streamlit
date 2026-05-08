@@ -13,7 +13,7 @@ creds_dict = dict(st.secrets["gcp_service_account"])
 creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
 
 # Kết nối
-client = gspread.service_account_from_dict(creds_dict)
+client = gs.service_account_from_dict(creds_dict)
 # client = gs.service_account(filename=key_file)
 # client = gs.service_account_from_dict(st.secrets["gcp_service_account"])
 sh = client.open_by_key(sheet_id)
