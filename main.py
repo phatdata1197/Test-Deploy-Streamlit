@@ -5,21 +5,18 @@ import streamlit as st
 key_file = 'Google Sheet Connector.json'
 sheet_id = '1-YBba8d2RMhY5By3uT-NHSJ10Yt4ekcUwUb13kC3CmY'
 sheet_name = 'Trang tính1'
-creds_dict = st.secrets["gcp_service_account"]
+creds_dict = st.secrets["gcp_service_account"].to_dict()
 
-# 2. XỬ LÝ LỖI DÒNG (Quan trọng nhất)
-# Ép kiểu sang string và replace cả hai trường hợp có thể xảy ra
-private_key = creds_dict["private_key"]
-if isinstance(private_key, str):
-    # Xử lý cả dấu xuyệt kép (do Streamlit tự thêm) và xuyệt đơn
-    creds_dict["private_key"] = private_key.replace("\\n", "\n")
+# 2. Bây giờ bạn có thể thoải mái chỉnh sửa giá trị bên trong dictionary này
+if "private_key" in creds_dict:
+    creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
 
-# 3. Khởi tạo client
+# 3. Kết nối với Google Sheets bằng dictionary đã được sửa
 try:
-    client = gs.service_account_from_dict(creds_dict)
-    st.success("Kết nối Google Sheets thành công!")
+    client = gspread.service_account_from_dict(creds_dict)
+    st.success("Kết nối thành công!")
 except Exception as e:
-    st.error(f"Lỗi kết nối: {e}")
+    st.error(f"Vẫn còn lỗi xác thực: {e}")
 
 # Kết nối
 # client = gs.service_account_from_dict(creds_dict)
