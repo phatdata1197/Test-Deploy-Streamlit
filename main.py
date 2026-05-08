@@ -1,7 +1,6 @@
 import gspread as gs
 import pandas as pd
 import streamlit as st
-
 key_file = 'Google Sheet Connector.json'
 sheet_id = '1-YBba8d2RMhY5By3uT-NHSJ10Yt4ekcUwUb13kC3CmY'
 sheet_name = 'Trang tính1'
@@ -13,7 +12,7 @@ if "private_key" in creds_dict:
 
 # 3. Kết nối với Google Sheets bằng dictionary đã được sửa
 try:
-    client = gspread.service_account_from_dict(creds_dict)
+    client = gs.service_account_from_dict(creds_dict)
     st.success("Kết nối thành công!")
 except Exception as e:
     st.error(f"Vẫn còn lỗi xác thực: {e}")
