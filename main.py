@@ -6,7 +6,8 @@ key_file = 'Google Sheet Connector.json'
 sheet_id = '1-YBba8d2RMhY5By3uT-NHSJ10Yt4ekcUwUb13kC3CmY'
 sheet_name = 'Trang tính1'
 
-client = gs.service_account(filename=key_file)
+# client = gs.service_account(filename=key_file)
+client = gs.service_account_from_dict(st.secrets["gcp_service_account"])
 sh = client.open_by_key(sheet_id)
 ws = sh.worksheet(sheet_name)
 
