@@ -6,8 +6,16 @@ key_file = 'Google Sheet Connector.json'
 sheet_id = '1-YBba8d2RMhY5By3uT-NHSJ10Yt4ekcUwUb13kC3CmY'
 sheet_name = 'Trang tính1'
 
+# Đọc secret
+creds_dict = dict(st.secrets["gcp_service_account"])
+
+# Fix định dạng key từ 1 dòng thành nhiều dòng
+creds_dict["private_key"] = creds_dict["private_key"].replace("\\n", "\n")
+
+# Kết nối
+client = gspread.service_account_from_dict(creds_dict)
 # client = gs.service_account(filename=key_file)
-client = gs.service_account_from_dict(st.secrets["gcp_service_account"])
+# client = gs.service_account_from_dict(st.secrets["gcp_service_account"])
 sh = client.open_by_key(sheet_id)
 ws = sh.worksheet(sheet_name)
 
